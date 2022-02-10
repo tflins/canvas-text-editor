@@ -1,14 +1,38 @@
 lockfileVersion: 5.3
 
-specifiers:
-  typescript: ^4.5.4
-  vite: ^2.8.0
+importers:
 
-devDependencies:
-  typescript: 4.5.5
-  vite: 2.8.0
+  .:
+    specifiers:
+      '@types/node': ^17.0.17
+      typescript: ^4.5.4
+      vite: ^2.8.0
+    dependencies:
+      '@types/node': 17.0.17
+    devDependencies:
+      typescript: 4.5.5
+      vite: 2.8.0
+
+  packages/editor:
+    specifiers:
+      '@canvas-text-editor/shared': workspace:^1.0.0
+    dependencies:
+      '@canvas-text-editor/shared': link:../shared
+
+  packages/shared:
+    specifiers: {}
+
+  packages/web-site:
+    specifiers:
+      '@canvas-text-editor/editor': workspace:^1.0.0
+    dependencies:
+      '@canvas-text-editor/editor': link:../editor
 
 packages:
+
+  /@types/node/17.0.17:
+    resolution: {integrity: sha512-e8PUNQy1HgJGV3iU/Bp2+D/DXh3PYeyli8LgIwsQcs1Ar1LoaWHSIT6Rw+H2rNJmiq6SNWiDytfx8+gYj7wDHw==}
+    dev: false
 
   /esbuild-android-arm64/0.14.21:
     resolution: {integrity: sha512-Bqgld1TY0wZv8TqiQmVxQFgYzz8ZmyzT7clXBDZFkOOdRybzsnj8AZuK1pwcLVA7Ya6XncHgJqIao7NFd3s0RQ==}
