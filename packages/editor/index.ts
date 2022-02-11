@@ -1,4 +1,9 @@
-import { createCanvas, isHtmlElement } from '@canvas-text-editor/shared'
+import {
+  createCanvas,
+  isHtmlElement,
+  windowToCanvas
+} from '@canvas-text-editor/shared'
+import { TextCursor } from '@canvas-text-editor/text-cursor'
 
 export interface ICanvasTextEditorOptions {
   el: string | HTMLElement
@@ -12,6 +17,8 @@ export class CanvasTextEditor {
   ctx: CanvasRenderingContext2D
   canvas: HTMLCanvasElement
 
+  textCursor: TextCursor
+
   constructor(options: ICanvasTextEditorOptions) {
     this.options = Object.assign({}, defaultCanvasTextEditorOptions, options)
 
@@ -23,7 +30,24 @@ export class CanvasTextEditor {
     this.canvas = canvas
     this.ctx = cxt
 
+    this.textCursor = new TextCursor({
+      editorCanvas: this.canvas,
+      editorContent: this.ctx
+    })
+
+    this.bindEvent()
     this.mount()
+  }
+
+  bindEvent() {
+    this.canvas.onmousedown = (e: MouseEvent) => {
+      const loc = windowToCanvas(this.canvas, e.clientX, e.clientY)
+      this.moveCursor(loc)
+    }
+  }
+
+  moveCursor(loc: { x: number, y: number }) {
+    this.textCursor.draw(loc.x, loc.y)
   }
 
   mount() {

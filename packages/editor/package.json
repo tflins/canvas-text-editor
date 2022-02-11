@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@canvas-text-editor/shared": "workspace:^1.0.0"
+    "@canvas-text-editor/shared": "workspace:^1.0.0",
+    "@canvas-text-editor/text-cursor": "workspace:^1.0.0"
   }
 }

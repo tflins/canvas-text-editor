@@ -16,11 +16,19 @@ importers:
   packages/editor:
     specifiers:
       '@canvas-text-editor/shared': workspace:^1.0.0
+      '@canvas-text-editor/text-cursor': workspace:^1.0.0
     dependencies:
       '@canvas-text-editor/shared': link:../shared
+      '@canvas-text-editor/text-cursor': link:../text-cursor
 
   packages/shared:
     specifiers: {}
+
+  packages/text-cursor:
+    specifiers:
+      '@canvas-text-editor/editor': workspace:^1.0.0
+    dependencies:
+      '@canvas-text-editor/editor': link:../editor
 
   packages/web-site:
     specifiers:
