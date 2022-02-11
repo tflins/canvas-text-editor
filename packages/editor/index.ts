@@ -11,11 +11,16 @@ export interface ICanvasTextEditorOptions {
 
 const defaultCanvasTextEditorOptions: Partial<ICanvasTextEditorOptions> = {}
 
+const BLINK_ON = 700
+const BLINK_OFF = 300
+
 export class CanvasTextEditor {
   options: ICanvasTextEditorOptions
   el: HTMLElement | null = null
   ctx: CanvasRenderingContext2D
   canvas: HTMLCanvasElement
+  drawingSurfaceImageData: ImageData
+  blinkingInterval
 
   textCursor: TextCursor
 
@@ -37,6 +42,7 @@ export class CanvasTextEditor {
 
     this.bindEvent()
     this.mount()
+    this.saveDrawingSurface()
   }
 
   bindEvent() {
@@ -46,8 +52,27 @@ export class CanvasTextEditor {
     }
   }
 
+  saveDrawingSurface() {
+    return this.drawingSurfaceImageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+  }
+
+  blinkCursor() {
+    this.blinkingInterval = setInterval(() => {
+      this.textCursor.erase(this.drawingSurfaceImageData)
+
+      setTimeout(() => {
+        this.textCursor.draw()
+      }, BLINK_OFF)
+    }, BLINK_ON)
+  }
+
   moveCursor(loc: { x: number, y: number }) {
+    this.textCursor.erase(this.drawingSurfaceImageData)
     this.textCursor.draw(loc.x, loc.y)
+
+    if (!this.blinkingInterval) {
+      this.blinkCursor()
+    }
   }
 
   mount() {

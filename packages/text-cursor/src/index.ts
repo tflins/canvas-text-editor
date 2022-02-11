@@ -1,8 +1,8 @@
 export interface ITextCursorOptions {
-  width?: number;
-  fillStyle?: string;
-  editorCanvas: HTMLCanvasElement;
-  editorContent: CanvasRenderingContext2D;
+  width?: number
+  fillStyle?: string
+  editorCanvas: HTMLCanvasElement
+  editorContent: CanvasRenderingContext2D
 }
 
 export const defaultTextCursorOptions: Partial<ITextCursorOptions> = {
@@ -11,29 +11,29 @@ export const defaultTextCursorOptions: Partial<ITextCursorOptions> = {
 }
 
 export class TextCursor {
-  options: ITextCursorOptions;
-  left: number = 0;
-  top: number = 0;
+  options: ITextCursorOptions
+  left: number = 0
+  top: number = 0
 
   constructor(options: ITextCursorOptions) {
-    this.options = Object.assign({}, defaultTextCursorOptions, options);
+    this.options = Object.assign({}, defaultTextCursorOptions, options)
   }
 
   get fillStyle() {
-    return this.options.fillStyle;
+    return this.options.fillStyle
   }
 
   get width() {
-    return this.options.width;
+    return this.options.width
   }
 
   get height() {
     const h = this.editorContent.measureText('W').width
-    return h + h / 6
+    return Math.floor(h + h / 6)
   }
 
   get editorContent() {
-    return this.options.editorContent;
+    return this.options.editorContent
   }
 
   createPath() {
@@ -41,7 +41,7 @@ export class TextCursor {
     this.editorContent.rect(this.left, this.top, this.width, this.height)
   }
 
-  draw(left: number, top: number) {
+  draw(left = this.left, top = this.top) {
     this.editorContent.save()
 
     this.left = left
@@ -53,5 +53,17 @@ export class TextCursor {
     this.editorContent.fill()
 
     this.editorContent.restore()
+  }
+
+  erase(imageData: ImageData) {
+    this.editorContent.putImageData(
+      imageData,
+      0,
+      0,
+      this.left,
+      this.top,
+      this.width,
+      this.height
+    )
   }
 }
