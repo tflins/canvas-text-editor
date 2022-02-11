@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@canvas-text-editor/text-line",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@canvas-text-editor/shared": "workspace:^1.0.0",
+    "@canvas-text-editor/text-cursor": "workspace:^1.0.0"
+  }
+}
