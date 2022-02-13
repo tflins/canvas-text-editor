@@ -20,7 +20,7 @@ export class CanvasTextEditor {
   ctx!: CanvasRenderingContext2D
   canvas!: HTMLCanvasElement
   drawingSurfaceImageData!: ImageData
-  blinkingInterval!:  NodeJS.Timer
+  blinkingInterval!: NodeJS.Timer
 
   textCursor!: TextCursor
 
