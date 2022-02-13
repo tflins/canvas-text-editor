@@ -25,10 +25,7 @@ importers:
     specifiers: {}
 
   packages/text-cursor:
-    specifiers:
-      '@canvas-text-editor/editor': workspace:^1.0.0
-    dependencies:
-      '@canvas-text-editor/editor': link:../editor
+    specifiers: {}
 
   packages/web-site:
     specifiers:

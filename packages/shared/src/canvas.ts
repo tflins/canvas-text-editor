@@ -5,7 +5,7 @@ export function createCanvas(width = 300, height = 300) {
   canvas.height = height
 
   return {
-    cxt: canvas.getContext('2d'),
+    cxt: canvas.getContext('2d')!,
     canvas
   }
 }

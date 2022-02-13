@@ -16,13 +16,13 @@ const BLINK_OFF = 300
 
 export class CanvasTextEditor {
   options: ICanvasTextEditorOptions
-  el: HTMLElement | null = null
-  ctx: CanvasRenderingContext2D
-  canvas: HTMLCanvasElement
-  drawingSurfaceImageData: ImageData
-  blinkingInterval
+  el!: HTMLElement
+  ctx!: CanvasRenderingContext2D
+  canvas!: HTMLCanvasElement
+  drawingSurfaceImageData!: ImageData
+  blinkingInterval!:  NodeJS.Timer
 
-  textCursor: TextCursor
+  textCursor!: TextCursor
 
   constructor(options: ICanvasTextEditorOptions) {
     this.options = Object.assign({}, defaultCanvasTextEditorOptions, options)
@@ -80,7 +80,7 @@ export class CanvasTextEditor {
       throw new Error('el is undefined')
     }
 
-    let wrapElenemt: HTMLElement = null
+    let wrapElenemt: HTMLElement | null = null
     if (typeof this.options.el === 'string') {
       wrapElenemt = document.querySelector(this.options.el)
     } else if (isHtmlElement(this.options.el)) {
@@ -89,6 +89,6 @@ export class CanvasTextEditor {
       throw new Error('el must dom or class name')
     }
 
-    wrapElenemt.appendChild(this.canvas)
+    wrapElenemt!.appendChild(this.canvas)
   }
 }

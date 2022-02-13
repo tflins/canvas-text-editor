@@ -1,5 +1,5 @@
 import { CanvasTextEditor } from '@canvas-text-editor/editor'
 
-const editor = new CanvasTextEditor({
+new CanvasTextEditor({
   el: '#app'
 })

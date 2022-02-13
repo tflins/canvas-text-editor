@@ -20,11 +20,11 @@ export class TextCursor {
   }
 
   get fillStyle() {
-    return this.options.fillStyle
+    return this.options.fillStyle!
   }
 
   get width() {
-    return this.options.width
+    return this.options.width!
   }
 
   get height() {
