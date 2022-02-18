@@ -17,15 +17,25 @@ importers:
     specifiers:
       '@canvas-text-editor/shared': workspace:^1.0.0
       '@canvas-text-editor/text-cursor': workspace:^1.0.0
+      '@canvas-text-editor/text-line': workspace:^1.0.0
     dependencies:
       '@canvas-text-editor/shared': link:../shared
       '@canvas-text-editor/text-cursor': link:../text-cursor
+      '@canvas-text-editor/text-line': link:../text-line
 
   packages/shared:
     specifiers: {}
 
   packages/text-cursor:
     specifiers: {}
+
+  packages/text-line:
+    specifiers:
+      '@canvas-text-editor/shared': workspace:^1.0.0
+      '@canvas-text-editor/text-cursor': workspace:^1.0.0
+    dependencies:
+      '@canvas-text-editor/shared': link:../shared
+      '@canvas-text-editor/text-cursor': link:../text-cursor
 
   packages/web-site:
     specifiers:

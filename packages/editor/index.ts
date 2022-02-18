@@ -4,6 +4,7 @@ import {
   windowToCanvas
 } from '@canvas-text-editor/shared'
 import { TextCursor } from '@canvas-text-editor/text-cursor'
+import { TextLine } from '@canvas-text-editor/text-line'
 
 export interface ICanvasTextEditorOptions {
   el: string | HTMLElement
@@ -23,6 +24,7 @@ export class CanvasTextEditor {
   blinkingInterval!: NodeJS.Timer
 
   textCursor!: TextCursor
+  textLine!: TextLine
 
   constructor(options: ICanvasTextEditorOptions) {
     this.options = Object.assign({}, defaultCanvasTextEditorOptions, options)
@@ -48,9 +50,56 @@ export class CanvasTextEditor {
   bindEvent() {
     this.canvas.onmousedown = (e: MouseEvent) => {
       const loc = windowToCanvas(this.canvas, e.clientX, e.clientY)
+
+      this.textLine = new TextLine({
+        editorCanvas: this.canvas,
+        editorContent: this.ctx,
+        x: loc.x,
+        y: loc.y
+      })
+
       this.moveCursor(loc)
     }
+
+    document.onkeydown = (e: KeyboardEvent) => {
+      if (e.keyCode === 8 || e.keyCode === 13) {
+        e.preventDefault()
+      }
+
+      if (e.keyCode === 8) {
+        this.ctx.save()
+        this.textLine.erase(this.drawingSurfaceImageData)
+        this.moveCursor({
+          x: this.textLine.left + this.textCursor.width,
+          y: this.textLine.bottom
+        })
+        this.textLine.draw()
+        this.ctx.restore()
+      }
+    }
+
+    document.onkeypress = (e: KeyboardEvent) => {
+      const key = String.fromCharCode(e.which);
+      if (e.keyCode !== 8 && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+
+        this.ctx.save();
+        this.textLine.erase(this.drawingSurfaceImageData);
+        this.textLine.insert(key);
+        this.moveCursor({
+          x: this.textLine.left + this.textLine.width,
+          y: this.textLine.bottom
+        })
+        this.ctx.shadowColor = 'rgba (0,0, 0,0.5) ';
+        this.ctx.shadowOffsetY = 1;
+        this.ctx.shadowOffsetY = 1;
+        this.ctx.shadowBlur = 2;
+        this.textLine.draw();
+        this.ctx.restore();
+      }
+    }
   }
+
 
   saveDrawingSurface() {
     return this.drawingSurfaceImageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
